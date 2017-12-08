@@ -1,0 +1,17 @@
+
+# Adjust these to configure the client and/or server to run at boot.
+serverhud_install_server: yes
+serverhud_install_client: yes
+
+# The user to run the service(s) as.
+serverhud_user: serverhud
+serverhud_group: serverhud
+
+# Home directory of the serverhud user the serverhud configuration and log files.
+serverhud_home_dir: /opt/serverhud
+
+serverhud_pip_uri: git+https://github.com/deadbok/server-hud
+
+# State of packages needed, use "installed" to make sure they are install and
+# "latest" to make sure they are updated.
+serverhud_packagess_state: latest

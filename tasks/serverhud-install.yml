@@ -1,0 +1,6 @@
+---
+# The ansible roles are not cloned, to include them use "recursive: yes"
+- name: Install the server hud package
+  pip:
+    name: "{{ serverhud_pip_uri }}"
+    executable: "{{ pip_executable }}"

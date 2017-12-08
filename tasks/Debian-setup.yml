@@ -1,0 +1,28 @@
+---
+- name: Update apt cache.
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  become: yes
+
+- name: Install Debian packages needed for serverhud installation.
+  apt:
+    name: "{{ item }}"
+    state: "{{ serverhud_packagess_state }}"
+  with_items: "{{ serverhud_packages }}"
+  become: yes
+
+- name: "Add {{ serverhud_group }} group"
+  group:
+    name: "{{ serverhud_group }}"
+    state: present
+  become: yes
+
+- name: "Add {{ serverhud_user }} user"
+  user:
+    name: "{{ serverhud_user }}"
+    createhome: yes
+    group: "{{ serverhud_group }}"
+    home: "{{ serverhud_home_dir }}"
+    system: yes
+  become: yes

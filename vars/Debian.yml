@@ -1,0 +1,6 @@
+---
+serverhud_packages:
+  - python3-pip
+  - git
+
+pip_executable: pip3
