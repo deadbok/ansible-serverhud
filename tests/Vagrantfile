@@ -40,7 +40,6 @@ Vagrant.configure("2") do |config|
   # define provisioning
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "test.yml"
-    ansible.raw_arguments = ['-v']
     ansible.host_vars = {
         "server-serverhud" => {
             "serverhud_install_client" => false,
