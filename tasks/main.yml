@@ -1,24 +1,18 @@
 ---
-# Include variables and define needed variables.
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
-# Setup/install tasks.
-- include_tasks: "{{ ansible_os_family }}-setup.yml"
-
-- name: "Push ssh key to {{ serverhud_user }} user"
-  authorized_key:
-    user: "{{ serverhud_user }}"
-    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-    state: present
-  become: yes
+- name: Install OS-specific packages
+  include_tasks: "{{ ansible_os_family }}-setup.yml"
 
 - name: Install server hud
-  include: "serverhud-install.yml"
+  include_tasks: "serverhud-install.yml"
 
-- name: "Remove key from the {{ serverhud_user }} user"
-  authorized_key:
-    user: "{{ serverhud_user }}"
-    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-    state: absent
-  become: yes
+- name: Configure server hud
+  include_tasks: "serverhud-config.yml"
+
+- name: Configure OS-specific settings
+  include_tasks: "{{ ansible_os_family }}-config.yml"
+
+- name: Setup server hud services
+  include_tasks: "serverhud-service.yml"

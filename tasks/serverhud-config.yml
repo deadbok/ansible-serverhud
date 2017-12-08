@@ -1,0 +1,16 @@
+---
+- name: Create the server hud server configuration file.
+  template:
+    src: server-config.py.j2
+    dest: "{{ serverhud_server_config_path }}"
+  when: serverhud_install_server
+  notify: Restart server hud server
+  become: yes
+
+- name: Create the server hud client configuration file.
+  template:
+    src: client-config.py.j2
+    dest: "{{ serverhud_client_config_path }}"
+  when: serverhud_install_client
+  notify: Restart server hud client
+  become: yes

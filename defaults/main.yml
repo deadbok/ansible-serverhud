@@ -1,17 +1,69 @@
-
+## Services ##
 # Adjust these to configure the client and/or server to run at boot.
 serverhud_install_server: yes
 serverhud_install_client: yes
 
-# The user to run the service(s) as.
+# Service names.
+serverhud_server_service: serverhud-server
+serverhud_client_service: serverhud-client
+
+## User and path ###
+# The user that runs the service(s).
 serverhud_user: serverhud
 serverhud_group: serverhud
 
-# Home directory of the serverhud user the serverhud configuration and log files.
+# Home directory of the serverhud user.
 serverhud_home_dir: /opt/serverhud
 
+## Package, logs, and configuration locations ##
+#Server hud pip packeage URI to install from.
 serverhud_pip_uri: git+https://github.com/deadbok/server-hud
 
-# State of packages needed, use "installed" to make sure they are install and
+# Configuration file paths
+serverhud_config_path: "{{ serverhud_home_dir }}"
+serverhud_server_config_path: "{{ serverhud_config_path }}/serverhud-server-config.py"
+serverhud_client_config_path: "{{ serverhud_config_path }}/serverhud-client-config.py"
+
+# Log file path.
+serverhud_log_path: "{{ serverhud_home_dir }}"
+
+## States of packages and services ##
+# Set initial apache state. Recommended values: `started` or `stopped`
+serverhud_state: started
+
+# Set server hud state when configuration changes are made.
+serverhud_restart_state: restarted
+
+# State of packages needed, use "installed" to make sure they are installed and
 # "latest" to make sure they are updated.
 serverhud_packagess_state: latest
+
+## Server and client configuration ##
+
+# Enable debugging
+serverhud_debug: "False"
+
+serverhud_allowed: "[getfqdn() + ':5000', gethostname() + ':5000', 'localhost:5000']"
+
+# Python dictionary of hosts for the panels on the client.
+serverhud_client_host: "{'web_connections': 'localhost:5000', \
+         'web_remote_host': 'localhost:5000', \
+         'web_uptime': 'localhost:5000', \
+         'web_accesses': 'localhost:5000', \
+         'fw_connections': 'localhost:5000', \
+         'fw_speed': 'localhost:5000'}"
+
+# Process to use when calculating uptime.
+serverhud_server_process: lighttd
+
+# Access log of the web server.
+serverhud_server_access_log: /var/log/lighttpd/access.log
+
+# Network interface to use when calculating speed.
+serverhud_server_interface: eth1
+
+# Port to scan for number of connections
+serverhud_server_port: '80'
+
+# Python list of enabled services on the server.
+serverhud_server_services: "['connections', 'uptime', 'remote_host', 'accesses']"

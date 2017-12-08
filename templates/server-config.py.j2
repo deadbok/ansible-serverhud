@@ -1,0 +1,22 @@
+'''
+:since: 03/08/2015
+:author: oblivion
+'''
+from socket import getfqdn, gethostname
+
+# Process to use when calculating uptime.
+PROCESS_NAME = {{ serverhud_server_process }}
+# Access log of the web server.
+ACCESS_LOG = {{ serverhud_server_access }}
+# Network interface to use when calculating speed.
+INTERFACE = {{ serverhud_server_interface }}
+# Port to scan for number of connections
+PORT = {{ serverhud_server_port }}
+# Debug logging.
+DEBUG = {{ serverhud_debug }}
+# List of enabled services on this instance.
+WS_SERVICES = {{ serverhud_server_services }}
+# List of allowed host.
+ALLOWED = {{ serverhud_allowed }}
+
+SERVER_LOG_FILE = "{{ serverhud_log_path }}/serverhud-server.log"

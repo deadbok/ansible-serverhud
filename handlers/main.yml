@@ -1,0 +1,10 @@
+---
+- name: Restart server hud server
+  service:
+    name: "{{ serverhud_server_service }}"
+  state: "{{ serverhud_restart_state }}"
+
+- name: Restart server hud client
+  service:
+    name: "{{ serverhud_client_service }}"
+  state: "{{ serverhud_restart_state }}"

@@ -4,3 +4,5 @@ serverhud_packages:
   - git
 
 pip_executable: pip3
+
+systemd_service_dir: /lib/systemd/system/

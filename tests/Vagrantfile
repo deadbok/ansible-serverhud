@@ -40,18 +40,27 @@ Vagrant.configure("2") do |config|
   # define provisioning
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "test.yml"
-    ansible.raw_arguments = ['-vvv']
+    ansible.raw_arguments = ['-v']
     ansible.host_vars = {
         "server-serverhud" => {
             "serverhud_install_client" => false,
+            "serverhud_allowed" => "[getfqdn() + ':5000', gethostname() + ':5000', 'localhost:5000', 'client-serverhud:5000']",
+            "serverhud_client_host": "{'web_connections': 'server-serverhud:5000', \
+                     'web_remote_host': 'server-serverhud:5000', \
+                     'web_uptime': 'server-serverhud:5000', \
+                     'web_accesses': 'server-serverhud:5000', \
+                     'fw_connections': 'server-serverhud:5000', \
+                     'fw_speed': 'server-serverhud:5000'}"
         },
         "client-serverhud" => {
             "serverhud_install_server" => false,
+            "serverhud_allowed" => "[getfqdn() + ':5000', gethostname() + ':5000', 'localhost:5000', 'server-serverhud:5000']",
+            "serverhud_server_process" => "lighttpd",
+            "serverhud_server_access" => "/var/log/lighttpd/access.log",
+            "serverhud_server_interface" => "eth0",
+            "serverhud_server_port" => "80",
+            "serverhud_server_services" => "['connections', 'uptime', 'remote_host', 'accesses']"
         }
     }
-    # ansible.groups = {
-    #       "servers" => ["srv-a"],
-    #       "workstations"  => ["ws-a"]
-    # }
   end
 end

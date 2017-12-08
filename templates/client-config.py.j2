@@ -1,0 +1,15 @@
+'''
+:since: 03/08/2015
+:author: oblivion
+'''
+from socket import getfqdn, gethostname
+
+# List of allowed host.
+ALLOWED = {{ serverhud_allowed }}
+
+# Dictionary of hosts for the panels on the web page.
+HOSTS = {{ serverhud_client_host }}
+
+CLIENT_LOG_FILE = '{{ serverhud_log_path }}/serverhud-client.log'
+
+DEBUG = {{ serverhud_debug }}
