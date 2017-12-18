@@ -4,13 +4,16 @@ After=multi-user.target
 
 [Service]
 Type=simple
-Environment=SERVERHUD_CONFIG=/home/serverhud/config.py
+
+#Set the path to the configuration file using an environment variable.
+Environment=SERVERHUD_CONFIG={{ serverhud_client_config_path }}
 ExecStart=/usr/local/bin/serverhud-client
 StandardInput=tty-force
 StandardOutput=journal
 StandardError=journal
-User=serverhud
-Group=serverhud
+User={{ serverhud_user }}
+Group={{ serverhud_group }}
+# Restart the client if it dies.
 Restart=always
 RestartSec=3
 

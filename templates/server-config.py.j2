@@ -5,18 +5,32 @@
 from socket import getfqdn, gethostname
 
 # Process to use when calculating uptime.
-PROCESS_NAME = {{ serverhud_server_process }}
+PROCESS_NAME = "{{ serverhud_server_process }}"
 # Access log of the web server.
-ACCESS_LOG = {{ serverhud_server_access_log }}
+ACCESS_LOG = "{{ serverhud_server_access_log }}"
 # Network interface to use when calculating speed.
-INTERFACE = {{ serverhud_server_interface }}
+INTERFACE = "{{ serverhud_server_interface }}"
 # Port to scan for number of connections
-PORT = {{ serverhud_server_port }}
+PORT = [
+    {% for port in serverhud_server_ports %}
+        "{{ port }}",
+    {% endfor %}
+]
 # Debug logging.
 DEBUG = {{ serverhud_debug }}
 # List of enabled services on this instance.
-WS_SERVICES = {{ serverhud_server_services }}
+WS_SERVICES = [
+    {% for service in serverhud_server_services %}
+        "{{ service }}",
+    {% endfor %}
+]
 # List of allowed host.
-ALLOWED = {{ serverhud_allowed }}
+ALLOWED = [
+    {% for allowed in serverhud_allowed %}
+        "{{ allowed }}",
+    {% endfor %}
+]
 
+
+# Where to put logs
 SERVER_LOG_FILE = "{{ serverhud_log_path }}/serverhud-server.log"

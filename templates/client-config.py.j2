@@ -5,11 +5,21 @@
 from socket import getfqdn, gethostname
 
 # List of allowed host.
-ALLOWED = {{ serverhud_allowed }}
+ALLOWED = [
+    {% for allowed in serverhud_allowed %}
+        "{{ allowed }}",
+    {% endfor %}
+]
 
 # Dictionary of hosts for the panels on the web page.
-HOSTS = {{ serverhud_client_host }}
+HOSTS = {
+    {% for service, host in serverhud_client_host.items() %}
+        "{{ service }}": "{{ host }}",
+    {% endfor %}
+}
 
+# Where to put logs
 CLIENT_LOG_FILE = '{{ serverhud_log_path }}/serverhud-client.log'
 
+# Debug toggle
 DEBUG = {{ serverhud_debug }}

@@ -14,3 +14,12 @@
   when: serverhud_install_client
   notify: Restart server hud client
   become: yes
+
+- name: Create monitored access log
+  file:
+    path: "{{ serverhud_server_access_log }}"
+    state: touch
+  when: (serverhud_install_server) and (serverhud_server_services | join(" ") | regex_search('accesses'))
+  become: yes
+  notify:
+    - Restart server hud server

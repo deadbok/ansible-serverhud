@@ -1,10 +1,26 @@
 ---
+- name: Reload systemd service files
+  systemd:
+    daemon_reload: yes
+  become: yes
+  state: reloaded
+
+- name: Enable the server hud client service
+  service:
+    name: "{{ serverhud_client_service }}"
+    state: "{{ serverhud_state }}"
+  when: serverhud_install_client
+  notify: Restart server hud client
+  become: yes
+
 - name: Restart server hud server
   service:
     name: "{{ serverhud_server_service }}"
+  become: yes
   state: "{{ serverhud_restart_state }}"
 
 - name: Restart server hud client
   service:
     name: "{{ serverhud_client_service }}"
+  become: yes
   state: "{{ serverhud_restart_state }}"

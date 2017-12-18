@@ -52,5 +52,5 @@ are special they are Python files, and so the values given here should be correc
  * **serverhud_server_process** (*string*) Process to use when calculating uptime. (default: lighttd)
  * **serverhud_server_access_log** (*string*) Access log of the web server. (default: /var/log/lighttpd/access.log)
  * **serverhud_server_interface** (*string*) Network interface to use when calculating speed. (default: eth1)
- * **serverhud_server_port** (*string*) Port to scan for number of connections. (default: 80)
- * **serverhud_server_services** (*list of strings*) List of enabled services on the server. (default: ['connections', 'uptime', 'remote_host', 'accesses'])
+ * **serverhud_server_ports** (*list of strings*) Port to scan for number of connections. (default: 80)
+ * **serverhud_server_services** (*list of strings*) List of enabled services on the server. (default: [])

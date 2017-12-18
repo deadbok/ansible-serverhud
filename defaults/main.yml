@@ -11,6 +11,7 @@ serverhud_client_service: serverhud-client
 # The user that runs the service(s).
 serverhud_user: serverhud
 serverhud_group: serverhud
+serverhud_groups: www-data
 
 # Home directory of the serverhud user.
 serverhud_home_dir: /opt/serverhud
@@ -28,7 +29,7 @@ serverhud_client_config_path: "{{ serverhud_config_path }}/serverhud-client-conf
 serverhud_log_path: "{{ serverhud_home_dir }}"
 
 ## States of packages and services ##
-# Set initial apache state. Recommended values: `started` or `stopped`
+# Set initial service state. Recommended values: `started` or `stopped`
 serverhud_state: started
 
 # Set server hud state when configuration changes are made.
@@ -43,27 +44,31 @@ serverhud_packagess_state: latest
 # Enable debugging
 serverhud_debug: "False"
 
-serverhud_allowed: "[getfqdn() + ':5000', gethostname() + ':5000', 'localhost:5000']"
+serverhud_allowed:
+  - "[getfqdn() + ':5000"
+  - "gethostname() + ':5000"
+  - "localhost:5000]"
 
 # Python dictionary of hosts for the panels on the client.
-serverhud_client_host: "{'web_connections': 'localhost:5000', \
-         'web_remote_host': 'localhost:5000', \
-         'web_uptime': 'localhost:5000', \
-         'web_accesses': 'localhost:5000', \
-         'fw_connections': 'localhost:5000', \
-         'fw_speed': 'localhost:5000'}"
+serverhud_client_host:
+    web_connections: 'ws://localhost:5000'
+    web_remote_host: 'ws://localhost:5000'
+    web_uptime: 'ws://localhost:5000'
+    web_accesses: 'ws://localhost:5000'
+    fw_connections: 'ws://localhost:5000'
+    fw_speed: 'ws://localhost:5000'
 
 # Process to use when calculating uptime.
-serverhud_server_process: lighttd
+serverhud_server_process: lighttpd
 
 # Access log of the web server.
-serverhud_server_access_log: /var/log/lighttpd/access.log
+serverhud_server_access_log: '/var/log/lighttpd/access.log'
 
 # Network interface to use when calculating speed.
 serverhud_server_interface: eth1
 
 # Port to scan for number of connections
-serverhud_server_port: '80'
+serverhud_server_ports: '["80"]'
 
 # Python list of enabled services on the server.
-serverhud_server_services: "['connections', 'uptime', 'remote_host', 'accesses']"
+serverhud_server_services: '[]'

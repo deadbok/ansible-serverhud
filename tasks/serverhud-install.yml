@@ -5,19 +5,45 @@
     state: present
   become: yes
 
-- name: "Add {{ serverhud_user }} user"
+- name: "Add {{ serverhud_user }} user for client"
   user:
     name: "{{ serverhud_user }}"
     createhome: yes
     group: "{{ serverhud_group }}"
     home: "{{ serverhud_home_dir }}"
+    shell: /bin/bash
     system: yes
   become: yes
+  when: not serverhud_install_server
+
+- name: "Add {{ serverhud_user }} user for server"
+  user:
+    name: "{{ serverhud_user }}"
+    createhome: yes
+    group: "{{ serverhud_group }}"
+    home: "{{ serverhud_home_dir }}"
+    shell: /bin/bash
+    system: yes
+  become: yes
+  when: (serverhud_install_server) and not (serverhud_server_services | join(" ") | regex_search('accesses'))
+
+- name: "Add {{ serverhud_user }} user for server with additional groups: {{ serverhud_groups }}"
+  user:
+    name: "{{ serverhud_user }}"
+    createhome: yes
+    group: "{{ serverhud_group }}"
+    groups: "{{ serverhud_groups }}"
+    home: "{{ serverhud_home_dir }}"
+    shell: /bin/bash
+    system: yes
+  become: yes
+  when: (serverhud_install_server) and (serverhud_server_services | join(" ") | regex_search('accesses'))
 
 - name: Install the server hud package
   pip:
     name: "{{ serverhud_pip_uri }}"
     executable: "{{ pip_executable }}"
+  become: yes
   notify:
     - Restart server hud server
     - Restart server hud client

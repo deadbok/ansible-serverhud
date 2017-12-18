@@ -4,12 +4,12 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/serverhud-server --config=/home/serverhud/config.py --debug
+ExecStart=/usr/local/bin/serverhud-server --config={{ serverhud_server_config_path }} --debug
 StandardInput=tty-force
 StandardOutput=journal
 StandardError=journal
-User=serverhud
-Group=serverhud
+User={{ serverhud_user }}
+Group={{ serverhud_group }}
 
 [Install]
 WantedBy=multi-user.target
