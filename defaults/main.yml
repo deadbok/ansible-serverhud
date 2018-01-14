@@ -3,6 +3,10 @@
 serverhud_install_server: yes
 serverhud_install_client: yes
 
+#Version
+serverhud_version: "0.6.0"
+serverhud_arch: "py3-none-any"
+
 # Service names.
 serverhud_server_service: serverhud-server
 serverhud_client_service: serverhud-client
@@ -16,14 +20,19 @@ serverhud_groups: www-data
 # Home directory of the serverhud user.
 serverhud_home_dir: /opt/serverhud
 
+# Web server site root directory, for the client.
+serverhud_site_dir: /var/www/html
+
 ## Package, logs, and configuration locations ##
 #Server hud pip packeage URI to install from.
 serverhud_pip_uri: git+https://github.com/deadbok/server-hud
+serverhud_pip_local: no
+
+serverhud_client_repo: https://github.com/deadbok/serverhud-client.git
 
 # Configuration file paths
-serverhud_config_path: "{{ serverhud_home_dir }}"
-serverhud_server_config_path: "{{ serverhud_config_path }}/serverhud-server-config.py"
-serverhud_client_config_path: "{{ serverhud_config_path }}/serverhud-client-config.py"
+serverhud_server_config_path: "{{ serverhud_home_dir }}/serverhud-server-config.py"
+serverhud_client_config_path: "{{ serverhud_site_dir }}/js/serverhud-client-config.js"
 
 # Log file path.
 serverhud_log_path: "{{ serverhud_home_dir }}"

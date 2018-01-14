@@ -4,17 +4,7 @@
     name: "{{ serverhud_group }}"
     state: present
   become: yes
-
-- name: "Add {{ serverhud_user }} user for client"
-  user:
-    name: "{{ serverhud_user }}"
-    createhome: yes
-    group: "{{ serverhud_group }}"
-    home: "{{ serverhud_home_dir }}"
-    shell: /bin/bash
-    system: yes
-  become: yes
-  when: not serverhud_install_server
+  when: serverhud_install_server
 
 - name: "Add {{ serverhud_user }} user for server"
   user:
@@ -39,11 +29,29 @@
   become: yes
   when: (serverhud_install_server) and (serverhud_server_services | join(" ") | regex_search('accesses'))
 
-- name: Install the server hud package
+- name: Copy local Python package to remote
+  copy:
+    src: "{{ serverhud_pip_uri }}"
+    dest: "/tmp/{{ serverhud_pip_uri | basename }}"
+  notify:
+    - Restart server hud server
+  when: serverhud_install_server and serverhud_pip_local
+
+- name: Install server hud from local Python package
+  pip:
+    name: "/tmp/{{ serverhud_pip_uri | basename }}"
+    executable: "{{ pip_executable }}"
+    extra_args: "--no-cache-dir --ignore-installed --force-reinstall"
+  become: yes
+  notify:
+    - Restart server hud server
+  when: serverhud_install_server and serverhud_pip_local
+
+- name: Install the server hud Python package
   pip:
     name: "{{ serverhud_pip_uri }}"
     executable: "{{ pip_executable }}"
   become: yes
   notify:
     - Restart server hud server
-    - Restart server hud client
+  when: serverhud_install_server and not serverhud_pip_local

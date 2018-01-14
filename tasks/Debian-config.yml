@@ -8,14 +8,3 @@
       - Reload systemd service files
       - Restart server hud server
   become: yes
-
-- name: Create the server hud client service file.
-  template:
-    src: serverhud-client.service.j2
-    dest: "{{ systemd_service_dir }}/serverhud-client.service"
-  when: serverhud_install_client
-  notify:
-      - Reload systemd service files
-      - Enable the server hud client service
-      - Restart server hud client
-  become: yes

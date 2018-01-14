@@ -5,8 +5,13 @@
 - name: Install OS-specific packages
   include_tasks: "{{ ansible_os_family }}-install.yml"
 
-- name: Install server hud
-  include_tasks: "serverhud-install.yml"
+- name: Install server hud server
+  include_tasks: "serverhud-install-server.yml"
+  when: serverhud_install_server
+
+- name: Install server hud client
+  include_tasks: "serverhud-install-client.yml"
+  when: serverhud_install_client
 
 - name: Configure server hud
   include_tasks: "serverhud-config.yml"
@@ -16,3 +21,4 @@
 
 - name: Setup server hud services
   include_tasks: "serverhud-service.yml"
+  when: serverhud_install_server

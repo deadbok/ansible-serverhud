@@ -6,11 +6,3 @@
   when: serverhud_install_server
   notify: Restart server hud server
   become: yes
-
-- name: Enable the server hud client service.
-  service:
-    name: "{{ serverhud_client_service }}"
-    state: "{{ serverhud_state }}"
-  when: serverhud_install_client
-  notify: Restart server hud client
-  become: yes

@@ -1,0 +1,16 @@
+// Server HUD CLient configuration
+
+var HOSTNAME = "{{ ansible_hostname }}"
+// List of allowed host.
+var ALLOWED = [
+    {% for allowed in serverhud_allowed %}
+        "{{ allowed }}",
+    {% endfor %}
+]
+
+// Dictionary of hosts for the panels on the web page.
+var HOSTS = {
+    {% for service, host in serverhud_client_host.items() %}
+        {{ service }}: "{{ host }}",
+    {% endfor %}
+}

@@ -1,0 +1,8 @@
+---
+- name: Clone HTML5 client
+  git:
+    repo: "{{ serverhud_client_repo }}"
+    clone: yes
+    dest: "{{ serverhud_site_dir }}"
+  become: yes
+  when: serverhud_install_client

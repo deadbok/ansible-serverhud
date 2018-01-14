@@ -1,6 +1,10 @@
 ---
-serverhud_packages:
+serverhud_server_packages:
   - python3-pip
+  - python3-wheel
+  - git
+
+serverhud_client_packages:
   - git
 
 pip_executable: pip3

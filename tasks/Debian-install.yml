@@ -5,9 +5,18 @@
     cache_valid_time: 3600
   become: yes
 
-- name: Install Debian packages needed for serverhud installation.
+- name: Install Debian packages needed for serverhud server installation.
   apt:
     name: "{{ item }}"
     state: "{{ serverhud_packagess_state }}"
-  with_items: "{{ serverhud_packages }}"
+  with_items: "{{ serverhud_server_packages }}"
+  when: serverhud_install_server
+  become: yes
+
+- name: Install Debian packages needed for serverhud client installation.
+  apt:
+    name: "{{ item }}"
+    state: "{{ serverhud_packagess_state }}"
+  with_items: "{{ serverhud_client_packages }}"
+  when: serverhud_install_client
   become: yes
