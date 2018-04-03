@@ -1,9 +1,9 @@
 ---
 - name: Include OS-specific variables.
-  include_vars: "{{ ansible_os_family }}.yml"
+  include_vars: "{{ ansible_distribution }}.yml"
 
 - name: Install OS-specific packages
-  include_tasks: "{{ ansible_os_family }}-install.yml"
+  include_tasks: "{{ ansible_distribution }}-install.yml"
 
 - name: Install server hud server
   include_tasks: "serverhud-install-server.yml"
@@ -17,7 +17,7 @@
   include_tasks: "serverhud-config.yml"
 
 - name: Configure OS-specific settings
-  include_tasks: "{{ ansible_os_family }}-config.yml"
+  include_tasks: "{{ ansible_distribution }}-config.yml"
 
 - name: Setup server hud services
   include_tasks: "serverhud-service.yml"
